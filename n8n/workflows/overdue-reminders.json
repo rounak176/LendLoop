@@ -1,0 +1,94 @@
+{
+  "id": "dHicZAZVfznKBT1E",
+  "name": "LendLoop · Daily overdue reminders",
+  "nodes": [
+    {
+      "id": "daily",
+      "name": "Daily at 09:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "triggerAtHour": 9,
+              "triggerAtMinute": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "manual",
+      "name": "Run reminder demo",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "Fetch and remind overdue borrowers",
+      "name": "Fetch and remind overdue borrowers",
+      "type": "CUSTOM.lendLoopAutomation",
+      "typeVersion": 1,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "operation": "overdue"
+      },
+      "credentials": {
+        "lendLoopApi": {
+          "id": "lendloop-api-local",
+          "name": "LendLoop Automation API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 65000
+    }
+  ],
+  "connections": {
+    "Daily at 09:00": {
+      "main": [
+        [
+          {
+            "node": "Fetch and remind overdue borrowers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run reminder demo": {
+      "main": [
+        [
+          {
+            "node": "Fetch and remind overdue borrowers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "executionTimeout": 900,
+    "errorWorkflow": "XNwzG6A4HI1IVUYp"
+  },
+  "tags": []
+}

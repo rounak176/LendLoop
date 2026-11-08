@@ -1,0 +1,24 @@
+.next/
+node_modules/
+coverage/
+*.tsbuildinfo
+.env*
+!.env.example
+!.env.n8n.example
+.env.n8n
+.vercel/
+n8n/data/
+# Private automation setup
+.automation-secrets.local.json
+.n8n-credentials.local.json
+
+# Local credentials, editor state, and private verification captures
+client_secret*.json
+*.zone
+.agents/
+.claude/
+skills-lock.json
+docs/*-verified.png
+
+# Checked-in bindings allow checks before connecting Convex
+convex/_generated/ai/

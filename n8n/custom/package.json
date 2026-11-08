@@ -1,0 +1,10 @@
+{
+  "name": "n8n-nodes-lendloop",
+  "version": "0.1.0",
+  "private": true,
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": ["LendLoopApi.credentials.js"],
+    "nodes": ["LendLoopAutomation.node.js"]
+  }
+}

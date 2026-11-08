@@ -1,0 +1,61 @@
+{
+  "id": "XNwzG6A4HI1IVUYp",
+  "name": "LendLoop · Automation failures",
+  "nodes": [
+    {
+      "id": "error",
+      "name": "Workflow failure",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "Record sanitized failure",
+      "name": "Record sanitized failure",
+      "type": "CUSTOM.lendLoopAutomation",
+      "typeVersion": 1,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "operation": "failure"
+      },
+      "credentials": {
+        "lendLoopApi": {
+          "id": "lendloop-api-local",
+          "name": "LendLoop Automation API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    }
+  ],
+  "connections": {
+    "Workflow failure": {
+      "main": [
+        [
+          {
+            "node": "Record sanitized failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "executionTimeout": 900
+  },
+  "tags": []
+}

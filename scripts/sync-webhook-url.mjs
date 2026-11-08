@@ -1,0 +1,10 @@
+import { spawnSync } from 'node:child_process';
+const logs = spawnSync('docker', ['compose', 'logs', '--no-color', 'tunnel'], { encoding: 'utf8' });
+const matches = (logs.stdout + logs.stderr).match(/https:\/\/[a-z0-9-]+\.trycloudflare\.com/g);
+const base = matches?.at(-1);
+if (!base) throw new Error('Tunnel URL is not ready. Check docker compose logs tunnel, then retry.');
+const target = `${base}/webhook/lendloop-request-events`;
+const result = spawnSync('npx', ['convex', 'env', 'set', 'N8N_REQUEST_WEBHOOK_URL'], { input: target, encoding: 'utf8' });
+if (result.status !== 0) throw new Error('Could not configure Convex webhook URL.');
+console.log(`Configured webhook-only HTTPS endpoint: ${target}`);
+console.log('Run this again after recreating the tunnel; quick-tunnel URLs can change.');

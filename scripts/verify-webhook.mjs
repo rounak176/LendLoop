@@ -1,0 +1,17 @@
+import { readFileSync } from 'node:fs';
+import { createHmac, randomUUID } from 'node:crypto';
+const eventId = process.argv[2];
+if (!eventId) throw new Error('Pass an already completed synthetic demo event ID.');
+const { inboundSecret } = JSON.parse(readFileSync('.automation-secrets.local.json', 'utf8'));
+const envelope = { timestamp: Date.now(), nonce: randomUUID(), payload: JSON.stringify({ eventId, type: 'loan.approved' }) };
+envelope.signature = createHmac('sha256', inboundSecret).update(`${envelope.timestamp}.${envelope.nonce}.${envelope.payload}`).digest('hex');
+const send = body => fetch('http://localhost:5678/webhook/lendloop-request-events', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+const duplicate = await send(envelope);
+if (!duplicate.ok || !(await duplicate.json()).duplicate) throw new Error('Expected duplicate delivery to be safely skipped.');
+console.log('PASS: already completed event does not send again.');
+const replay = await send(envelope);
+if (replay.ok) throw new Error('Replayed envelope was not rejected.');
+console.log('PASS: exact transport replay rejected.');
+const tampered = await send({ ...envelope, payload: '{}' });
+if (tampered.ok) throw new Error('Tampered envelope was not rejected.');
+console.log('PASS: tampered signature rejected. Expected negative-test failures appear in n8n history.');
