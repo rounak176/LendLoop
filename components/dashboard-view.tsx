@@ -5,6 +5,7 @@ import { useQuery, useMutation } from "convex/react";
 import { Button } from "baseui/button";
 import Link from "next/link";
 import type { Id } from "@/convex/_generated/dataModel";
+import { ActivityNotifications } from "@/components/activity-notifications";
 import { LoanAutomationActivity } from "@/components/loan-automation-activity";
 import { useSuccess } from "@/components/success-feedback";
 import { api } from "@/convex/_generated/api";
@@ -34,6 +35,7 @@ export function DashboardView({ listingsOnly = false }: { listingsOnly?: boolean
     <div className="dashboard-sections">
       {message && <p role="status">{message}</p>}
       {!listingsOnly && data && <>
+      <ActivityNotifications />
       <section>
         <h2 className="section-title">Incoming requests</h2>
         <LoanTable
@@ -48,7 +50,7 @@ export function DashboardView({ listingsOnly = false }: { listingsOnly?: boolean
         />
       </section>
       <section>
-        <h2 className="section-title">Borrowed from neighbors</h2>
+        <h2 className="section-title">My requests</h2>
         <LoanTable loans={data.borrowed} toolName={toolName} />
       </section>
       <section>
@@ -57,6 +59,13 @@ export function DashboardView({ listingsOnly = false }: { listingsOnly?: boolean
           loans={data.incoming.filter((loan: { status: string }) => loan.status === "approved")}
           toolName={toolName}
           action={(loan) => <Button size="mini" kind="secondary" disabled={pending} onClick={() => void run(() => confirmReturn({ loanId: loan._id }), "Return confirmed")}>Confirm return</Button>}
+        />
+      </section>
+      <section>
+        <h2 className="section-title">Reviewed requests</h2>
+        <LoanTable
+          loans={data.incoming.filter(loan => loan.status === "declined" || loan.status === "returned")}
+          toolName={toolName}
         />
       </section>
       </>}
@@ -95,7 +104,7 @@ function LoanTable({
         <thead><tr><th>Tool</th><th>Dates</th><th>Status</th>{action && <th>Action</th>}</tr></thead>
         <tbody>{loans.map((loan) => (
           <tr key={loan._id}>
-            <td>{toolName(loan.toolId)}<LoanAutomationActivity loanId={loan._id} /></td><td>{loan.startDate} – {loan.endDate}</td><td>{loan.isOverdue ? "Overdue" : loan.status}</td>
+            <td>{toolName(loan.toolId)}<LoanAutomationActivity loanId={loan._id} /></td><td>{loan.startDate} – {loan.endDate}</td><td>{loan.isOverdue ? "Overdue" : loan.status === "approved" ? "Accepted" : loan.status === "declined" ? "Rejected" : loan.status}</td>
             {action && <td>{action(loan)}</td>}
           </tr>
         ))}</tbody>

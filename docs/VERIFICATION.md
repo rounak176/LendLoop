@@ -1,9 +1,9 @@
-# Verification — 5 November 2026
+# Verification — updated 15 November 2026
 
 ## Passed
 
 - Lint, TypeScript checks, production build.
-- 12 Convex simulation/security tests: core authorization and loan rules, notification privacy/read status, HMAC tampering/stale timestamps, HTTP replay, idempotent event/reminder receipts, stale claims, return-before-reminder completion, retry exhaustion.
+- 13 Convex simulation/security tests: core authorization and loan rules, notification privacy/read status, HMAC tampering/stale timestamps, HTTP replay, idempotent event/reminder receipts, stale claims, return-before-reminder completion, retry exhaustion.
 - Deployment of backend functions/schema to development Convex.
 - Local n8n custom node and encrypted credential import; request and daily workflows published; linked error workflow imported.
 - Live Convex → HTTPS gateway → n8n → signed Convex callback: synthetic event sent on its first attempt.
@@ -25,3 +25,10 @@ The synthetic listing is inactive and hidden from the public board. Its syntheti
 - TypeScript passes with the real generated Convex API types. Base Web adoption is partial; native selects/tables remain.
 
 See AUTOMATION.md for actual signed contracts, setup, credentials, and recovery.
+
+## Final local checks — 15 November 2026
+
+- All 13 tests, lint, TypeScript checks, and production build passed again.
+- My activity now includes persistent notifications (including read decisions), Accepted/Rejected labels, and reviewed incoming requests.
+- Previous live Docker/Convex checks above were performed during the earlier integration session; they were not rerun as part of this final build check.
+- Existing screen recordings have been copied into a separate local submission folder; their contents require review before sharing.

@@ -1,16 +1,16 @@
 # LendLoop task checklist
 
-IDs are stable so they can be referenced in issues or a spreadsheet. Checked tasks are implemented in the local scaffold; unchecked tasks remain incomplete or require external services, focused tests, or production-ready automation.
+IDs are stable so they can be referenced in issues or a spreadsheet. Checked tasks have implementation or verification evidence. Unchecked tasks identify remaining manual verification; they are not all submission blockers. Updated 15 November 2026.
 
 ## 1. Foundation
 
 - [x] F01 Scaffold Next.js App Router with TypeScript, linting, and package scripts.
-- [ ] F02 Create Clerk and Convex development projects; configure Clerk provider and Convex JWT validation.
-- [ ] F03 Create `.env.example`, validate required configuration, and ignore secret files.
-- [ ] F04 Add protected routes and sign-in/sign-out/session loading states.
-- [ ] F05 Define users, tools, loans, automation events, and reminder tables and indexes.
-- [ ] F06 Add shared authenticated-user, owner, participant, and admin authorization helpers.
-- [ ] F07 Implement trusted user-profile synchronization and a documented admin bootstrap operation.
+- [x] F02 Create Clerk and Convex development projects; configure Clerk provider and Convex JWT validation.
+- [x] F03 Create `.env.example`, validate required configuration, and ignore secret files.
+- [x] F04 Add protected routes and sign-in/sign-out/session loading states.
+- [x] F05 Define users, tools, loans, automation events, and reminder tables and indexes.
+- [x] F06 Add shared authenticated-user, owner, participant, and admin authorization helpers.
+- [x] F07 Implement trusted user-profile synchronization and a documented admin bootstrap operation.
 - [ ] F08 Seed demo categories, tools, and test accounts without real personal data.
 
 ## UI foundation: Base Web
@@ -18,9 +18,9 @@ IDs are stable so they can be referenced in issues or a spreadsheet. Checked tas
 - [x] U01 Select and pin compatible Base Web, Styletron, React, and Next.js versions.
 - [x] U02 Configure StyletronProvider and BaseProvider through an App Router client provider boundary.
 - [ ] U03 Implement and verify SSR style collection/rehydration with per-request server style state.
-- [ ] U04 Define LendLoop theme tokens and reusable component overrides.
-- [ ] U05 Build shared Base Web form fields, buttons, cards, tabs, status displays, modals, and table wrappers as needed.
-- [ ] U06 Integrate controlled date-range inputs with neighborhood calendar-date serialization.
+- [x] U04 Define LendLoop theme tokens and reusable component overrides.
+- [x] U05 Build shared Base Web form fields, buttons, cards, tabs, status displays, modals, and table wrappers as needed.
+- [x] U06 Integrate controlled date-range inputs with neighborhood calendar-date serialization.
 - [ ] U07 Verify responsive layouts, keyboard access, focus behavior, contrast, and loading/error states.
 
 ## 2. Listings and public experience
@@ -77,16 +77,16 @@ IDs are stable so they can be referenced in issues or a spreadsheet. Checked tas
 ## 7. Verification and submission
 
 - [ ] V01 Test unauthenticated, owner, borrower, unrelated user, and admin access directly against backend functions.
-- [ ] V02 Test invalid dates, self-borrowing, illegal transitions, and simultaneous overlapping approvals.
+- [x] V02 Test invalid dates, self-borrowing, illegal transitions, and simultaneous overlapping approvals.
 - [ ] V03 Test removed listings, history retention, and return handling.
 - [x] V04 Test valid/tampered/stale signatures and replayed webhook deliveries.
 - [x] V05 Test duplicate events, repeated daily runs, expired claims, and repeated acknowledgments.
 - [x] V06 Test network failure, bounded retries, terminal failure visibility, and recovery.
-- [ ] V07 Verify public query responses and automation payloads do not expose unnecessary personal data.
-- [ ] V08 Run lint, type-check, production build, and focused integration tests.
-- [ ] V09 Complete local n8n setup, environment reference, architecture, and production notes.
-- [ ] V10 Import exported workflows into a clean n8n instance and run an end-to-end demo.
-- [ ] V11 Scan repository and workflow exports for secrets; publish the source repository when ready.
+- [x] V07 Verify public query responses and automation payloads do not expose unnecessary personal data.
+- [x] V08 Run lint, type-check, production build, and focused integration tests.
+- [x] V09 Complete local n8n setup, environment reference, architecture, and production notes.
+- [x] V10 Import exported workflows into a clean n8n instance and run an end-to-end demo.
+- [x] V11 Scan repository and workflow exports for secrets; publish the source repository when ready.
 - [ ] V12 Prepare demo: list tool → request → approve → simulate overdue → reminder → return.
 
 ## Submission artifacts
@@ -100,3 +100,10 @@ IDs are stable so they can be referenced in issues or a spreadsheet. Checked tas
 ## Automation implementation checkpoint — 5 November 2026
 
 Signed local Docker/n8n integration is implemented and live-tested using logged mock delivery. Workflows require the custom node source in `n8n/custom/` and encrypted credentials. See AUTOMATION.md for actual contracts, tunnel refresh, import, and recovery steps. Production email delivery is not configured.
+
+## Remaining manual verification
+
+- F08: Demo seed exists; reviewers create their own Clerk accounts.
+- U03/U07/L07: Styletron SSR and responsive feedback are implemented; a comprehensive hydration/accessibility audit is not recorded.
+- V01/V03: Automated coverage exercises key permissions and returns; a full role matrix and removed-listing history audit remain manual checks.
+- V12: Existing app recordings are organized locally. Rejection, Convex, and n8n evidence still need recording/review; see SUBMISSION.md.

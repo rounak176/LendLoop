@@ -8,6 +8,8 @@ LendLoop is a neighborhood tool-lending application for the Fluence take-home as
 
 ## Documentation
 
+- [Submission checklist and demo script](docs/SUBMISSION.md).
+
 - [Verification results](docs/VERIFICATION.md): local fixes, checks, and remaining limits.
 
 - [Setup and usage walkthrough](docs/USAGE.md): sign-in, listings, borrowing, returns, admin access, and troubleshooting.
